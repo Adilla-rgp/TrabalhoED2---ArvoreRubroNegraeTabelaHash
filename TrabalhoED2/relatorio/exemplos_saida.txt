@@ -1,6 +1,14 @@
 ====================================================
 Estruturas de Dados II - Trabalho Unidade 2
+
 Aluna: Àdilla Roberta Gomes Pereira
+
+RELATÓRIO DE TESTES
+
+Descrição:
+Este documento apresenta a execução dos testes realizados sobre as estruturas Árvore Rubro-Negra Modificada e
+Tabela Hash com Endereçamento Aberto implementadas no trabalho da Unidade 2(2026.1).
+
 ====================================================
 
 ===== Testes Disponíveis =====
