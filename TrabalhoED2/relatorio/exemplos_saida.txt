@@ -1,0 +1,331 @@
+====================================================
+Estruturas de Dados II - Trabalho Unidade 2
+Aluna: Àdilla Roberta Gomes Pereira
+====================================================
+
+===== Testes Disponíveis =====
+
+--------------------------------------------
+
+ÁRVORE RUBRO-NEGRA MODIFICADA
+1. Inserções simples
+2. Inserções com balanceamento
+3. Remoções
+4. Inserções aleatórias
+5. Inserção simples com 3 elementos
+6. Busca de elementos
+7. Chaves duplicadas
+
+TABELA HASH COM ENDEREÇAMENTO ABERTO
+1. Inserção simples
+2. Tratamento de colisões
+3. Redimensionamento dinâmico
+4. Buscas e remoções
+5. Inserções aleatórias
+6. Atualização de valores
+
+===== Executando Testes =====
+
+=====   TESTE ÁRVORE RUBRO-NEGRA MODIFICADA   =====
+
+
+--- TESTE 1: Inserções simples ---
+Inserindo: [15, 10, 20, 5, 12, 17, 25]
+
+Arvore em ordem:
+[5:VERMELHO] [10:PRETO] [12:VERMELHO] [15:PRETO] [17:VERMELHO] [20:PRETO] [25:VERMELHO] 
+
+Estrutura da arvore:
+└── 15 (PRETO)
+    ├── 10 (PRETO)
+    │   ├── 5 (VERMELHO)
+    │   └── 12 (VERMELHO)
+    └── 20 (PRETO)
+        ├── 17 (VERMELHO)
+        └── 25 (VERMELHO)
+Tamanho: 7
+
+--- TESTE 2: Inserções com balanceamento ---
+Inserindo em sequência: [7, 3, 18, 10, 22, 8, 11, 26, 2, 6]
+Inseriu 7 - Tamanho: 1
+Inseriu 3 - Tamanho: 2
+Inseriu 18 - Tamanho: 3
+Inseriu 10 - Tamanho: 4
+Inseriu 22 - Tamanho: 5
+Inseriu 8 - Tamanho: 6
+Inseriu 11 - Tamanho: 7
+Inseriu 26 - Tamanho: 8
+Inseriu 2 - Tamanho: 9
+Inseriu 6 - Tamanho: 10
+
+Arvore final:
+└── 7 (PRETO)
+    ├── 3 (PRETO)
+    │   ├── 2 (VERMELHO)
+    │   └── 6 (VERMELHO)
+    └── 18 (VERMELHO)
+        ├── 10 (PRETO)
+        │   ├── 8 (VERMELHO)
+        │   └── 11 (VERMELHO)
+        └── 22 (PRETO)
+            └── 26 (VERMELHO)
+
+--- TESTE 3: Remoções ---
+Arvore inicial:
+[1:VERMELHO] [5:PRETO] [7:VERMELHO] [10:VERMELHO] [12:PRETO] [15:PRETO] [16:VERMELHO] [17:PRETO] [20:VERMELHO] [25:PRETO] 
+
+Removendo: [1, 15, 25]
+Removeu 1 - Tamanho: 9
+Removeu 15 - Tamanho: 8
+Removeu 25 - Tamanho: 7
+
+Arvore após remoções:
+[5:PRETO] [7:VERMELHO] [10:VERMELHO] [12:PRETO] [16:PRETO] [17:PRETO] [20:VERMELHO] 
+
+Estrutura:
+└── 16 (PRETO)
+    ├── 10 (VERMELHO)
+    │   ├── 5 (PRETO)
+    │   │   └── 7 (VERMELHO)
+    │   └── 12 (PRETO)
+    └── 20 (VERMELHO)
+        └── 17 (PRETO)
+
+--- TESTE 4: Inserções aleatórias ---
+Inserindo 20 números aleatórios...
+Tamanho final: 18
+
+Arvore em ordem:
+[2:VERMELHO] [5:PRETO] [9:VERMELHO] [18:VERMELHO] [19:PRETO] [25:PRETO] [30:VERMELHO] [32:PRETO] [43:VERMELHO] [48:PRETO] [56:VERMELHO] [63:PRETO] [70:PRETO] [76:VERMELHO] [82:PRETO] [84:VERMELHO] [92:VERMELHO] [93:PRETO] 
+
+--- TESTE 5: Inserções simples com 3 elementos ---
+Arvore em ordem:
+[10:VERMELHO] [20:PRETO] [30:VERMELHO] 
+
+Estrutura da arvore:
+└── 20 (PRETO)
+    ├── 10 (VERMELHO)
+    └── 30 (VERMELHO)
+
+--- TESTE 6: Busca de elementos ---
+Buscar 40: true
+Buscar 90: false
+
+--- TESTE 7: Chaves duplicadas ---
+Tamanho esperado: 2
+Tamanho atual: 2
+└── 10 (PRETO)
+    └── 20 (VERMELHO)
+
+
+============================================
+
+=====   TESTE TABELA HASH COM ENDEREÇAMENTO ABERTO  =====
+
+
+--- TESTE 1: Inserção simples ---
+Inserindo dados...
+
+========== Tabela Hash ==========
+Capacidade: 5
+Elementos: 3
+Ocupação: 60,00%
+---------------------------------
+[  0] [OCUPADA] Pedro -> 28
+[  1] [VAZIA]
+[  2] [OCUPADA] Maria -> 30
+[  3] [VAZIA]
+[  4] [OCUPADA] João -> 25
+================================
+
+Buscando 'Maria': 30
+Buscando 'Ana': null
+
+--- TESTE 2: TRATAMENTO DE COLISÕES ---
+Inserindo valores que podem gerar colisões...
+Inseriu Alice - Ocupação: 14,3%
+Inseriu Bob - Ocupação: 28,6%
+Inseriu Charlie - Ocupação: 42,9%
+Inseriu David - Ocupação: 57,1%
+Inseriu Eve - Ocupação: 71,4%
+
+ === Redimensionando tabela ===
+    Ocupação atual: 71,4%
+ Nova capacidade: 23
+=== Redimensionamento concluído ===
+
+Inseriu Frank - Ocupação: 26,1%
+
+========== Tabela Hash ==========
+Capacidade: 23
+Elementos: 6
+Ocupação: 26,09%
+---------------------------------
+[  0] [VAZIA]
+[  1] [VAZIA]
+[  2] [VAZIA]
+[  3] [VAZIA]
+[  4] [VAZIA]
+[  5] [VAZIA]
+[  6] [VAZIA]
+[  7] [VAZIA]
+[  8] [VAZIA]
+[  9] [OCUPADA] Eve -> Pessoa 5
+[ 10] [VAZIA]
+[ 11] [VAZIA]
+[ 12] [VAZIA]
+[ 13] [OCUPADA] Frank -> Pessoa 6
+[ 14] [OCUPADA] Alice -> Pessoa 1
+[ 15] [VAZIA]
+[ 16] [OCUPADA] Bob -> Pessoa 2
+[ 17] [VAZIA]
+[ 18] [OCUPADA] David -> Pessoa 4
+[ 19] [VAZIA]
+[ 20] [VAZIA]
+[ 21] [VAZIA]
+[ 22] [OCUPADA] Charlie -> Pessoa 3
+================================
+
+Verificando dados inseridos:
+Alice -> Pessoa 1
+Bob -> Pessoa 2
+Charlie -> Pessoa 3
+David -> Pessoa 4
+Eve -> Pessoa 5
+Frank -> Pessoa 6
+
+--- TESTE 3: Redimensionamento ---
+Tabela inicial - Capacidade: 5
+
+Inserindo elementos até atingir 70% de ocupação...
+Elemento  1 - Ocupação:  20,0% - Capacidade: 5
+Elemento  2 - Ocupação:  40,0% - Capacidade: 5
+Elemento  3 - Ocupação:  60,0% - Capacidade: 5
+Elemento  4 - Ocupação:  80,0% - Capacidade: 5
+
+ === Redimensionando tabela ===
+    Ocupação atual: 80,0%
+ Nova capacidade: 17
+=== Redimensionamento concluído ===
+
+Elemento  5 - Ocupação:  29,4% - Capacidade: 17
+Elemento  6 - Ocupação:  35,3% - Capacidade: 17
+Elemento  7 - Ocupação:  41,2% - Capacidade: 17
+Elemento  8 - Ocupação:  47,1% - Capacidade: 17
+Elemento  9 - Ocupação:  52,9% - Capacidade: 17
+Elemento 10 - Ocupação:  58,8% - Capacidade: 17
+
+--- TESTE 4: Buscas e Remoções ---
+Inserindo dados de produtos...
+
+========== Tabela Hash ==========
+Capacidade: 7
+Elementos: 4
+Ocupação: 57,14%
+---------------------------------
+[  0] [OCUPADA] Teclado -> 150.0
+[  1] [VAZIA]
+[  2] [OCUPADA] Mouse -> 50.0
+[  3] [VAZIA]
+[  4] [VAZIA]
+[  5] [OCUPADA] Monitor -> 800.0
+[  6] [OCUPADA] Notebook -> 2500.0
+================================
+
+Removendo 'Mouse'...
+Removido: true
+
+========== Tabela Hash ==========
+Capacidade: 7
+Elementos: 3
+Ocupação: 42,86%
+---------------------------------
+[  0] [OCUPADA] Teclado -> 150.0
+[  1] [VAZIA]
+[  2] [DELETADA]
+[  3] [VAZIA]
+[  4] [VAZIA]
+[  5] [OCUPADA] Monitor -> 800.0
+[  6] [OCUPADA] Notebook -> 2500.0
+================================
+
+Buscando 'Mouse' novamente: null
+Buscando 'Notebook': 2500.0
+
+--- TESTE 5: Inserções Aleatórias ---
+Inserindo 15 pares aleatórios...
+
+Inseriu chave  30 - Ocupação:   9,1%
+Inseriu chave  63 - Ocupação:  18,2%
+Inseriu chave  48 - Ocupação:  27,3%
+Inseriu chave  84 - Ocupação:  36,4%
+Inseriu chave  70 - Ocupação:  45,5%
+Inseriu chave  25 - Ocupação:  54,5%
+Inseriu chave   5 - Ocupação:  63,6%
+Inseriu chave  18 - Ocupação:  72,7%
+
+ === Redimensionando tabela ===
+    Ocupação atual: 72,7%
+ Nova capacidade: 37
+=== Redimensionamento concluído ===
+
+Inseriu chave  19 - Ocupação:  24,3%
+Inseriu chave  93 - Ocupação:  27,0%
+Inseriu chave  82 - Ocupação:  29,7%
+Inseriu chave   2 - Ocupação:  32,4%
+Inseriu chave  76 - Ocupação:  35,1%
+Inseriu chave  92 - Ocupação:  37,8%
+Inseriu chave  76 - Ocupação:  37,8%
+
+========== Tabela Hash ==========
+Capacidade: 37
+Elementos: 14
+Ocupação: 37,84%
+---------------------------------
+[  0] [VAZIA]
+[  1] [VAZIA]
+[  2] [VAZIA]
+[  3] [OCUPADA] 5 -> Dados_5
+[  4] [OCUPADA] 18 -> Dados_18
+[  5] [VAZIA]
+[  6] [VAZIA]
+[  7] [VAZIA]
+[  8] [OCUPADA] 2 -> Dados_2
+[  9] [OCUPADA] 70 -> Dados_70
+[ 10] [VAZIA]
+[ 11] [VAZIA]
+[ 12] [VAZIA]
+[ 13] [VAZIA]
+[ 14] [VAZIA]
+[ 15] [VAZIA]
+[ 16] [OCUPADA] 25 -> Dados_25
+[ 17] [OCUPADA] 93 -> Dados_93
+[ 18] [VAZIA]
+[ 19] [VAZIA]
+[ 20] [OCUPADA] 30 -> Dados_30
+[ 21] [VAZIA]
+[ 22] [VAZIA]
+[ 23] [VAZIA]
+[ 24] [OCUPADA] 48 -> Dados_48
+[ 25] [OCUPADA] 82 -> Dados_82
+[ 26] [VAZIA]
+[ 27] [OCUPADA] 19 -> Dados_19
+[ 28] [VAZIA]
+[ 29] [VAZIA]
+[ 30] [VAZIA]
+[ 31] [OCUPADA] 92 -> Dados_92
+[ 32] [VAZIA]
+[ 33] [OCUPADA] 84 -> Dados_84
+[ 34] [OCUPADA] 63 -> Dados_63
+[ 35] [OCUPADA] 76 -> Dados_76
+[ 36] [VAZIA]
+================================
+
+Total de elementos: 14
+Capacidade final: 37
+
+--- TESTE 6: Atualização de valores ---
+Antes: 20
+Depois: 35
+
+===== Testes Concluídos com Sucesso =====
