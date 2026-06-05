@@ -14,6 +14,7 @@ public class TesteTabelaHash {
         testeRedimensionamento();
         testeBuscasRemocoes();
         testeAleatorio();
+        testeAtualizacao();
     }
     
     public static void testeBasico() {
@@ -41,7 +42,7 @@ public class TesteTabelaHash {
         for (int i = 0; i < nomes.length; i++) {
             tabela.inserir(nomes[i], "Pessoa " + (i + 1));
             System.out.println("Inseriu " + nomes[i] + " - Ocupação: " + 
-                             String.format("%.1f%%", tabela.getOcupacao() * 100));
+            String.format("%.1f%%", tabela.getOcupacao() * 100));
         }
         
         tabela.imprimir();
@@ -64,7 +65,7 @@ public class TesteTabelaHash {
             
             double ocupacao = tabela.getOcupacao();
             System.out.printf("Elemento %2d - Ocupação: %5.1f%% - Capacidade: %d\n", 
-                            i, ocupacao * 100, tabela.getCapacidade());
+            i, ocupacao * 100, tabela.getCapacidade());
         }
     }
     
@@ -104,12 +105,28 @@ public class TesteTabelaHash {
             
             tabela.inserir(chave, valor);
             System.out.printf("Inseriu chave %3d - Ocupação: %5.1f%%\n", 
-                            chave, tabela.getOcupacao() * 100);
+            chave, tabela.getOcupacao() * 100);
         }
         
         tabela.imprimir();
         
         System.out.println("Total de elementos: " + tabela.getTamanho());
         System.out.println("Capacidade final: " + tabela.getCapacidade());
+    }
+
+    public static void testeAtualizacao() {
+
+    System.out.println("\n--- TESTE 6: Atualização de chave ---");
+
+    TabelaHash<String, Integer> tabela =
+            new TabelaHash<>();
+
+    tabela.inserir("João", 20);
+
+    System.out.println("Antes: " + tabela.buscar("João"));
+
+    tabela.inserir("João", 35);
+
+    System.out.println("Depois: " + tabela.buscar("João"));
     }
 }
