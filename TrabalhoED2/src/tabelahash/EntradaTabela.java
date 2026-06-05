@@ -17,8 +17,6 @@ public class EntradaTabela<K, V> {
         this.status = StatusEntrada.OCUPADA;
     }
     
-    // ===== GETTERS E SETTERS =====
-    
     public K getChave() {
         return chave;
     }

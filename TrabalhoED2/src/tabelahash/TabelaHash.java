@@ -2,58 +2,39 @@ package TrabalhoED2.src.tabelahash;
 
 import TrabalhoED2.src.utilitarios.FuncaoHash;
 
-/**
- * Implementação genérica de Tabela Hash com:
- * - Endereçamento aberto
- * - Hash quadrático para colisões
- * - Redimensionamento dinâmico (70% → 3x)
- * - Suporte a Generics <K, V>
- */
 @SuppressWarnings("unchecked")
 public class TabelaHash<K, V> {
     
     private EntradaTabela<K, V>[] tabela;
-    private int tamanho;           // Quantidade de elementos
-    private int capacidade;         // Tamanho da tabela
+    private int tamanho;           
+    private int capacidade;         
     private static final double LIMITE_OCUPACAO = 0.70;
     private static final int FATOR_CRESCIMENTO = 3;
     private static final int TAMANHO_INICIAL = 11;
     
-    /**
-     * Construtor com tamanho fixo inicial
-     */
     public TabelaHash(int tamanhoInicial) {
         if (tamanhoInicial <= 0) {
             throw new IllegalArgumentException("Tamanho deve ser positivo");
         }
         
-        // Usar próximo primo para melhor distribuição
         this.capacidade = FuncaoHash.proximoPrimo(tamanhoInicial);
         this.tabela = new EntradaTabela[capacidade];
         this.tamanho = 0;
         
-        // Inicializar todas as posições
         for (int i = 0; i < capacidade; i++) {
             tabela[i] = new EntradaTabela<>();
         }
     }
     
-    /**
-     * Construtor padrão
-     */
     public TabelaHash() {
         this(TAMANHO_INICIAL);
     }
     
-    /**
-     * Insere um par chave-valor
-     */
     public void inserir(K chave, V valor) {
         if (chave == null) {
             throw new IllegalArgumentException("Chave não pode ser nula");
         }
         
-        // Verificar se precisa redimensionar
         if (getOcupacao() >= LIMITE_OCUPACAO) {
             redimensionar();
         }
@@ -65,13 +46,11 @@ public class TabelaHash<K, V> {
         int tentativa = 0;
         int posicao;
         
-        // Hash quadrático para encontrar posição
         do {
             posicao = FuncaoHash.hashQuadratico(
                 hashInicial, tentativa, capacidade
             );
             
-            // Se encontrou posição vazia ou deletada
             if (tabela[posicao].estaLivre()) {
                 tabela[posicao].setChave(chave);
                 tabela[posicao].setValor(valor);
@@ -80,7 +59,6 @@ public class TabelaHash<K, V> {
                 return;
             }
             
-            // Se a chave já existe, atualizar valor
             if (tabela[posicao].getChave().equals(chave)) {
                 tabela[posicao].setValor(valor);
                 return;
@@ -93,9 +71,6 @@ public class TabelaHash<K, V> {
         throw new RuntimeException("Tabela cheia - hash quadrático não encontrou posição");
     }
     
-    /**
-     * Busca um valor pela chave
-     */
     public V buscar(K chave) {
         if (chave == null) {
             return null;
@@ -113,12 +88,10 @@ public class TabelaHash<K, V> {
                 hashInicial, tentativa, capacidade
             );
             
-            // Se encontrou uma posição vazia, chave não existe
             if (tabela[posicao].estaVazia()) {
                 return null;
             }
             
-            // Se encontrou a chave
             if (tabela[posicao].estaBuscavel() && 
                 tabela[posicao].getChave().equals(chave)) {
                 return tabela[posicao].getValor();
@@ -131,9 +104,6 @@ public class TabelaHash<K, V> {
         return null;
     }
     
-    /**
-     * Remove uma entrada pela chave
-     */
     public boolean remover(K chave) {
         if (chave == null) {
             return false;
@@ -151,12 +121,10 @@ public class TabelaHash<K, V> {
                 hashInicial, tentativa, capacidade
             );
             
-            // Se encontrou uma posição vazia, chave não existe
             if (tabela[posicao].estaVazia()) {
                 return false;
             }
             
-            // Se encontrou a chave
             if (tabela[posicao].estaBuscavel() && 
                 tabela[posicao].getChave().equals(chave)) {
                 tabela[posicao].setStatus(StatusEntrada.DELETADA);
@@ -171,50 +139,37 @@ public class TabelaHash<K, V> {
         return false;
     }
     
-    /**
-     * Redimensiona a tabela quando ocupa >= 70%
-     * Novo tamanho = tamanho anterior * 3
-     */
     private void redimensionar() {
-        System.out.println("\n>>> Redimensionando tabela...");
+        System.out.println("\n === Redimensionando tabela ===");
         System.out.println("    Ocupação atual: " + String.format("%.1f%%", getOcupacao() * 100));
         
         EntradaTabela<K, V>[] tabelaAntiga = tabela;
         int capacidadeAntiga = capacidade;
         
-        // Novo tamanho
         this.capacidade = FuncaoHash.proximoPrimo(capacidadeAntiga * FATOR_CRESCIMENTO);
         this.tabela = new EntradaTabela[capacidade];
         this.tamanho = 0;
         
-        // Inicializar
         for (int i = 0; i < capacidade; i++) {
             tabela[i] = new EntradaTabela<>();
         }
         
-        // Reinsert all old entries
-        System.out.println("    Nova capacidade: " + capacidade);
+        System.out.println(" Nova capacidade: " + capacidade);
         for (int i = 0; i < capacidadeAntiga; i++) {
             if (tabelaAntiga[i].estaBuscavel()) {
                 inserir(tabelaAntiga[i].getChave(), tabelaAntiga[i].getValor());
             }
         }
         
-        System.out.println("    Redimensionamento concluído!\n");
+        System.out.println("=== Redimensionamento concluído ===\n");
     }
     
-    /**
-     * Retorna o percentual de ocupação
-     */
     public double getOcupacao() {
         return (double) tamanho / capacidade;
     }
     
-    /**
-     * Imprime o conteúdo da tabela
-     */
     public void imprimir() {
-        System.out.println("\n========== TABELA HASH ==========");
+        System.out.println("\n========== Tabela Hash ==========");
         System.out.println("Capacidade: " + capacidade);
         System.out.println("Elementos: " + tamanho);
         System.out.println("Ocupação: " + String.format("%.2f%%", getOcupacao() * 100));
