@@ -31,113 +31,104 @@ public class TabelaHash<K, V> {
     }
     
     public void inserir(K chave, V valor) {
-        if (chave == null) {
-            throw new IllegalArgumentException("Chave não pode ser nula");
-        }
-        
-        if (getOcupacao() >= LIMITE_OCUPACAO) {
-            redimensionar();
-        }
-        
-        int hashInicial = FuncaoHash.hashMultiplicacao(
-            chave.hashCode(), capacidade
-        );
-        
-        int tentativa = 0;
-        int posicao;
-        
-        do {
-            posicao = FuncaoHash.hashQuadratico(
-                hashInicial, tentativa, capacidade
-            );
-            
-            if (tabela[posicao].estaLivre()) {
-                tabela[posicao].setChave(chave);
-                tabela[posicao].setValor(valor);
-                tabela[posicao].setStatus(StatusEntrada.OCUPADA);
-                tamanho++;
-                return;
-            }
-            
-            if (tabela[posicao].getChave().equals(chave)) {
-                tabela[posicao].setValor(valor);
-                return;
-            }
-            
-            tentativa++;
-            
-        } while (tentativa < capacidade);
-        
-        throw new RuntimeException("Tabela cheia - hash quadrático não encontrou posição");
+    if (chave == null) {
+        throw new IllegalArgumentException("Chave não pode ser nula");
     }
+
+    if (getOcupacao() >= LIMITE_OCUPACAO) {
+        redimensionar();
+    }
+
+    int hashInicial = FuncaoHash.hashMultiplicacao(
+        chave.hashCode(), capacidade
+    );
+
+    for (int tentativa = 0; tentativa < capacidade; tentativa++) {
+
+        int posicao = FuncaoHash.hashQuadratico(
+            hashInicial, tentativa, capacidade
+        );
+
+        if (tabela[posicao].estaLivre()) {
+            tabela[posicao].setChave(chave);
+            tabela[posicao].setValor(valor);
+            tabela[posicao].setStatus(StatusEntrada.OCUPADA);
+            tamanho++;
+            return;
+        }
+
+        if (tabela[posicao].estaBuscavel() &&
+            tabela[posicao].getChave().equals(chave)) {
+
+            tabela[posicao].setValor(valor);
+            return;
+        }
+    }
+
+    throw new RuntimeException(
+        "Tabela cheia - hash quadrático não encontrou posição"
+    );
+}
     
     public V buscar(K chave) {
-        if (chave == null) {
-            return null;
-        }
-        
-        int hashInicial = FuncaoHash.hashMultiplicacao(
-            chave.hashCode(), capacidade
-        );
-        
-        int tentativa = 0;
-        int posicao;
-        
-        do {
-            posicao = FuncaoHash.hashQuadratico(
-                hashInicial, tentativa, capacidade
-            );
-            
-            if (tabela[posicao].estaVazia()) {
-                return null;
-            }
-            
-            if (tabela[posicao].estaBuscavel() && 
-                tabela[posicao].getChave().equals(chave)) {
-                return tabela[posicao].getValor();
-            }
-            
-            tentativa++;
-            
-        } while (tentativa < capacidade);
-        
+    if (chave == null) {
         return null;
     }
+
+    int hashInicial = FuncaoHash.hashMultiplicacao(
+        chave.hashCode(), capacidade
+    );
+
+    for (int tentativa = 0; tentativa < capacidade; tentativa++) {
+
+        int posicao = FuncaoHash.hashQuadratico(
+            hashInicial, tentativa, capacidade
+        );
+
+        if (tabela[posicao].estaVazia()) {
+            return null;
+        }
+
+        if (tabela[posicao].estaBuscavel() &&
+            tabela[posicao].getChave().equals(chave)) {
+
+            return tabela[posicao].getValor();
+        }
+    }
+
+    return null;
+}
     
     public boolean remover(K chave) {
-        if (chave == null) {
-            return false;
-        }
-        
-        int hashInicial = FuncaoHash.hashMultiplicacao(
-            chave.hashCode(), capacidade
-        );
-        
-        int tentativa = 0;
-        int posicao;
-        
-        do {
-            posicao = FuncaoHash.hashQuadratico(
-                hashInicial, tentativa, capacidade
-            );
-            
-            if (tabela[posicao].estaVazia()) {
-                return false;
-            }
-            
-            if (tabela[posicao].estaBuscavel() && 
-                tabela[posicao].getChave().equals(chave)) {
-                tabela[posicao].setStatus(StatusEntrada.DELETADA);
-                tamanho--;
-                return true;
-            }
-            
-            tentativa++;
-            
-        } while (tentativa < capacidade);
-        
+    if (chave == null) {
         return false;
     }
+
+    int hashInicial = FuncaoHash.hashMultiplicacao(
+        chave.hashCode(), capacidade
+    );
+
+    for (int tentativa = 0; tentativa < capacidade; tentativa++) {
+
+        int posicao = FuncaoHash.hashQuadratico(
+            hashInicial, tentativa, capacidade
+        );
+
+        if (tabela[posicao].estaVazia()) {
+            return false;
+        }
+
+        if (tabela[posicao].estaBuscavel() &&
+            tabela[posicao].getChave().equals(chave)) {
+
+            tabela[posicao].setStatus(StatusEntrada.DELETADA);
+            tamanho--;
+            return true;
+        }
+    }
+
+    return false;
+}
     
     private void redimensionar() {
         System.out.println("\n === Redimensionando tabela ===");
