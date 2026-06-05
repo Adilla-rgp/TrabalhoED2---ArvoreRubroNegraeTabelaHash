@@ -2,6 +2,7 @@ package TrabalhoED2.src.arvorerebronegramodificada;
 
 public class ArvoreRubroNegraModificada<T extends Comparable<T>> {
     private NoRN<T> raiz;
+    private NoRN<T> ultimoInserido;
     private int tamanho;
     
     public ArvoreRubroNegraModificada() {
@@ -10,37 +11,45 @@ public class ArvoreRubroNegraModificada<T extends Comparable<T>> {
     }
     
     public void inserir(T chave) {
-        if (chave == null) {
-            throw new IllegalArgumentException("Chave não pode ser nula");
-        }
-        
-        raiz = rbInsert(raiz, chave);
-        raiz.setCor(CorNo.PRETO);
+    if (chave == null) {
+        throw new IllegalArgumentException("Chave não pode ser nula");
+    }
+
+    ultimoInserido = null;
+
+    raiz = rbInsert(raiz, chave);
+
+    if (ultimoInserido != null) {
+        fixupInsercao(ultimoInserido);
+        atualizarIrmaosRecursivo(raiz);
         tamanho++;
     }
+
+    if (raiz != null) {
+        raiz.setCor(CorNo.PRETO);
+    }
+}
     
-    /** RB-INSERT: Insere como BST comum e colore de vermelho*/
     private NoRN<T> rbInsert(NoRN<T> node, T chave) {
-        if (node == null) {
-            return new NoRN<>(chave);
-        }
-        
-        int cmp = chave.compareTo(node.getChave());
-        
-        if (cmp < 0) {
-            node.setEsquerdo(rbInsert(node.getEsquerdo(), chave));
-        } else if (cmp > 0) {
-            node.setDireito(rbInsert(node.getDireito(), chave));
-        } else {
-            // Chave duplicada - não inserir
-            tamanho--;
-            return node;
-        }
-        
+
+    if (node == null) {
+        ultimoInserido = new NoRN<>(chave);
+        return ultimoInserido;
+    }
+
+    int cmp = chave.compareTo(node.getChave());
+
+    if (cmp < 0) {
+        node.setEsquerdo(rbInsert(node.getEsquerdo(), chave));
+    }
+    else if (cmp > 0) {
+        node.setDireito(rbInsert(node.getDireito(), chave));
+    }
+    else {
         return node;
     }
-    
-    /** RB-INSERT-FIXUP: Corrige violações de propriedades após inserção */
+    return node;
+}
     public void fixupInsercao(NoRN<T> z) {
         while (z != raiz && z.getPai() != null && z.getPai().ehVermelho()) {
             
@@ -57,11 +66,11 @@ public class ArvoreRubroNegraModificada<T extends Comparable<T>> {
                 } else {
                     // Tio é preto
                     if (z == z.getPai().getDireito()) {
-                        // CASO 2: z é filho direito (triângulo)
+                        // CASO 2: z é filho direito 
                         z = z.getPai();
                         rotacaoEsquerda(z);
                     }
-                    // CASO 3: z é filho esquerdo (linha)
+                    // CASO 3: z é filho esquerdo 
                     z.getPai().setCor(CorNo.PRETO);
                     z.getPai().getPai().setCor(CorNo.VERMELHO);
                     rotacaoDireita(z.getPai().getPai());
@@ -79,11 +88,11 @@ public class ArvoreRubroNegraModificada<T extends Comparable<T>> {
                 } else {
                     // Tio é preto
                     if (z == z.getPai().getEsquerdo()) {
-                        // CASO 2: z é filho esquerdo (triângulo)
+                        // CASO 2: z é filho esquerdo 
                         z = z.getPai();
                         rotacaoDireita(z);
                     }
-                    // CASO 3: z é filho direito (linha)
+                    // CASO 3: z é filho direito 
                     z.getPai().setCor(CorNo.PRETO);
                     z.getPai().getPai().setCor(CorNo.VERMELHO);
                     rotacaoEsquerda(z.getPai().getPai());
@@ -93,73 +102,88 @@ public class ArvoreRubroNegraModificada<T extends Comparable<T>> {
         raiz.setCor(CorNo.PRETO);
     }
     
-    /** LEFT-ROTATE(T, x): Rotação à esquerda*/
     public void rotacaoEsquerda(NoRN<T> x) {
-        if (x == null || x.getDireito() == null) {
-            return;
-        }
-        
-        NoRN<T> y = x.getDireito();
-        
-        // Rotação
-        x.setDireito(y.getEsquerdo());
-        y.setPai(x.getPai());
-        
-        if (x.getPai() == null) {
-            raiz = y;
-        } else if (x == x.getPai().getEsquerdo()) {
-            x.getPai().setEsquerdo(y);
-        } else {
-            x.getPai().setDireito(y);
-        }
-        
-        y.setEsquerdo(x);
-        
-        atualizarIrmaos(x);
-        atualizarIrmaos(y);
+
+    if (x == null || x.getDireito() == null) {
+        return;
     }
+
+    NoRN<T> y = x.getDireito();
+
+    x.setDireito(y.getEsquerdo());
+
+    y.setPai(x.getPai());
+
+    if (x.getPai() == null) {
+        raiz = y;
+    } else if (x == x.getPai().getEsquerdo()) {
+        x.getPai().setEsquerdo(y);
+    } else {
+        x.getPai().setDireito(y);
+    }
+
+    y.setEsquerdo(x);
+    x.setPai(y);
+
+    atualizarIrmaosRecursivo(raiz);
+}
     
-    /** RIGHT-ROTATE(T, y): Rotação à direita */
     public void rotacaoDireita(NoRN<T> y) {
-        if (y == null || y.getEsquerdo() == null) {
-            return;
-        }
-        
-        NoRN<T> x = y.getEsquerdo();
-        
-        // Rotação
-        y.setEsquerdo(x.getDireito());
-        x.setPai(y.getPai());
-        
-        if (y.getPai() == null) {
-            raiz = x;
-        } else if (y == y.getPai().getEsquerdo()) {
-            y.getPai().setEsquerdo(x);
-        } else {
-            y.getPai().setDireito(x);
-        }
-        
-        x.setDireito(y);
-        
-        atualizarIrmaos(x);
-        atualizarIrmaos(y);
+
+    if (y == null || y.getEsquerdo() == null) {
+        return;
     }
+
+    NoRN<T> x = y.getEsquerdo();
+
+    y.setEsquerdo(x.getDireito());
+
+    x.setPai(y.getPai());
+
+    if (y.getPai() == null) {
+        raiz = x;
+    } else if (y == y.getPai().getEsquerdo()) {
+        y.getPai().setEsquerdo(x);
+    } else {
+        y.getPai().setDireito(x);
+    }
+
+    x.setDireito(y);
+    y.setPai(x);
+
+    atualizarIrmaosRecursivo(raiz);
+}
     
-    /** Atualiza a referência de irmão de um nó */
     private void atualizarIrmaos(NoRN<T> node) {
-        if (node == null || node.getPai() == null) {
-            node.setIrmao(null);
-            return;
-        }
-        
-        if (node == node.getPai().getEsquerdo()) {
-            node.setIrmao(node.getPai().getDireito());
-        } else {
-            node.setIrmao(node.getPai().getEsquerdo());
-        }
+
+    if (node == null) {
+        return;
     }
+
+    if (node.getPai() == null) {
+        node.setIrmao(null);
+        return;
+    }
+
+    if (node == node.getPai().getEsquerdo()) {
+        node.setIrmao(node.getPai().getDireito());
+    } else {
+        node.setIrmao(node.getPai().getEsquerdo());
+    }
+}
+
+    private void atualizarIrmaosRecursivo(NoRN<T> node) {
+
+    if (node == null) {
+        return;
+    }
+
+    atualizarIrmaos(node);
+
+    atualizarIrmaosRecursivo(node.getEsquerdo());
+    atualizarIrmaosRecursivo(node.getDireito());
+}
     
-    /** Remove uma chave da árvore*/
     public void remover(T chave) {
         NoRN<T> node = buscarNode(raiz, chave);
         if (node != null) {
@@ -168,7 +192,6 @@ public class ArvoreRubroNegraModificada<T extends Comparable<T>> {
         }
     }
     
-    /** RB-DELETE: Remove um nó*/
     private void rbDelete(NoRN<T> z) {
         NoRN<T> y = z;
         CorNo corOriginal = y.getCor();
@@ -204,7 +227,6 @@ public class ArvoreRubroNegraModificada<T extends Comparable<T>> {
         }
     }
     
-    /** RB-DELETE-FIXUP: Corrige violações após remoção*/
     private void fixupDelecao(NoRN<T> x) {
         while (x != raiz && x.ehPreto()) {
             if (x == x.getPai().getEsquerdo()) {
@@ -285,7 +307,6 @@ public class ArvoreRubroNegraModificada<T extends Comparable<T>> {
         x.setCor(CorNo.PRETO);
     }
     
-    /** Transplanta u por v*/
     private void transplante(NoRN<T> u, NoRN<T> v) {
         if (u.getPai() == null) {
             raiz = v;
@@ -300,7 +321,6 @@ public class ArvoreRubroNegraModificada<T extends Comparable<T>> {
         }
     }
     
-    /** Encontra o nó com chave mínima*/
     private NoRN<T> minimo(NoRN<T> node) {
         while (node.getEsquerdo() != null) {
             node = node.getEsquerdo();
@@ -308,7 +328,6 @@ public class ArvoreRubroNegraModificada<T extends Comparable<T>> {
         return node;
     }
     
-    /** Busca um nó com a chave especificada*/
     private NoRN<T> buscarNode(NoRN<T> node, T chave) {
         if (node == null) {
             return null;
@@ -324,12 +343,10 @@ public class ArvoreRubroNegraModificada<T extends Comparable<T>> {
         }
     }
     
-    /** Busca uma chave*/
     public boolean contem(T chave) {
         return buscarNode(raiz, chave) != null;
     }
     
-    /** Imprime a árvore em ordem*/
     public void imprimirEmOrdem() {
         imprimirEmOrdemAux(raiz);
         System.out.println();
@@ -343,7 +360,6 @@ public class ArvoreRubroNegraModificada<T extends Comparable<T>> {
         }
     }
     
-    /** Imprime a árvore com estrutura visual*/
     public void imprimirArvore() {
         if (raiz == null) {
             System.out.println("Árvore vazia");
