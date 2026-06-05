@@ -6,18 +6,19 @@ import java.util.Random;
 public class TesteArvoreRubroNegra {
     
     public static void main(String[] args) {
-        System.out.println("╔═══════════════════════════════════════════════╗");
-        System.out.println("║   TESTE ÁRVORE RUBRO-NEGRA MODIFICADA         ║");
-        System.out.println("╚═══════════════════════════════════════════════╝\n");
+        System.out.println("=====   TESTE ÁRVORE RUBRO-NEGRA MODIFICADA   =====\n");
         
         testeBasico();
         testeInsercoes();
         testeRemocoes();
         testeAleatorio();
+        testeSimples();
+        testeBusca();
+        testeDuplicatas();
     }
     
     public static void testeBasico() {
-        System.out.println("\n--- TESTE 1: INSERÇÕES SIMPLES ---");
+        System.out.println("\n--- TESTE 1: Inserções simples ---");
         ArvoreRubroNegraModificada<Integer> arvore = new ArvoreRubroNegraModificada<>();
         
         int[] valores = {15, 10, 20, 5, 12, 17, 25};
@@ -37,7 +38,7 @@ public class TesteArvoreRubroNegra {
     }
     
     public static void testeInsercoes() {
-        System.out.println("\n--- TESTE 2: INSERÇÕES COM BALANCEAMENTO ---");
+        System.out.println("\n--- TESTE 2: Inserções com balanceamento ---");
         ArvoreRubroNegraModificada<Integer> arvore = new ArvoreRubroNegraModificada<>();
         
         int[] valores = {7, 3, 18, 10, 22, 8, 11, 26, 2, 6};
@@ -53,7 +54,7 @@ public class TesteArvoreRubroNegra {
     }
     
     public static void testeRemocoes() {
-        System.out.println("\n--- TESTE 3: REMOÇÕES ---");
+        System.out.println("\n--- TESTE 3: Remoções ---");
         ArvoreRubroNegraModificada<Integer> arvore = new ArvoreRubroNegraModificada<>();
         
         int[] valores = {15, 10, 20, 5, 12, 17, 25, 1, 7, 16};
@@ -78,7 +79,7 @@ public class TesteArvoreRubroNegra {
     }
     
     public static void testeAleatorio() {
-        System.out.println("\n--- TESTE 4: INSERÇÕES ALEATÓRIAS ---");
+        System.out.println("\n--- TESTE 4: Inserções aleatórias ---");
         ArvoreRubroNegraModificada<Integer> arvore = new ArvoreRubroNegraModificada<>();
         
         Random rand = new Random(42);
@@ -98,4 +99,50 @@ public class TesteArvoreRubroNegra {
         System.out.println("\nArvore em ordem:");
         arvore.imprimirEmOrdem();
     }
+    public static void testeSimples() {
+        System.out.println("\n--- TESTE 5: Inserções simples com 3 elementos ---");
+        ArvoreRubroNegraModificada<Integer> arvore = new ArvoreRubroNegraModificada<>();
+
+        arvore.inserir(10);
+        arvore.inserir(20);
+        arvore.inserir(30);
+
+        System.out.println("Arvore em ordem:");
+        arvore.imprimirEmOrdem();
+
+        System.out.println("\nEstrutura da arvore:");
+        arvore.imprimirArvore();
+    }
+
+    public static void testeBusca() {
+    System.out.println("\n--- TESTE 6: Busca de elementos ---");
+
+    ArvoreRubroNegraModificada<Integer> arvore = new ArvoreRubroNegraModificada<>();
+
+    int[] valores = {50, 30, 70, 20, 40, 60, 80};
+
+    for (int v : valores) {
+        arvore.inserir(v);
+    }
+
+    System.out.println("Buscar 40: " + arvore.contem(40));
+    System.out.println("Buscar 90: " + arvore.contem(90));
+}
+
+public static void testeDuplicatas() {
+    System.out.println("\n--- TESTE 7: Chaves duplicadas ---");
+
+    ArvoreRubroNegraModificada<Integer> arvore = new ArvoreRubroNegraModificada<>();
+
+    arvore.inserir(10);
+    arvore.inserir(20);
+    arvore.inserir(20);
+    arvore.inserir(20);
+
+    System.out.println("Tamanho esperado: 2");
+    System.out.println("Tamanho atual: " + arvore.getTamanho());
+
+    arvore.imprimirArvore();
+}
+
 }
