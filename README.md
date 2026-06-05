@@ -2,7 +2,7 @@
 
 ## Aluna
 
-**Àdilla Roberta Gomes Pereira**
+Àdilla Roberta Gomes Pereira
 
 ## Disciplina
 
@@ -10,7 +10,7 @@ Estruturas de Dados II
 
 ---
 
-# Descrição
+## Descrição
 
 Este trabalho apresenta a implementação de duas estruturas de dados estudadas na disciplina:
 
@@ -21,13 +21,13 @@ O objetivo é demonstrar o funcionamento das operações fundamentais de inserç
 
 ---
 
-# Estruturas Implementadas
+## Estruturas Implementadas
 
-## 1. Árvore Rubro-Negra Modificada
+### 1. Árvore Rubro-Negra Modificada
 
 Estrutura baseada em árvore binária de busca balanceada.
 
-### Operações implementadas
+#### Operações implementadas
 
 - Inserção
 - Remoção
@@ -39,24 +39,24 @@ Estrutura baseada em árvore binária de busca balanceada.
 - Impressão em ordem
 - Impressão estrutural
 
-### Propriedades mantidas
+#### Propriedades mantidas
 
 - Todo nó é vermelho ou preto
 - A raiz é sempre preta
 - Nós vermelhos possuem apenas filhos pretos
 - Todo caminho da raiz até uma folha possui a mesma quantidade de nós pretos
 
-### Complexidade
+#### Complexidade
 
 | Operação | Complexidade |
-|-----------|------------|
+| -------- | ------------ |
 | Busca | O(log n) |
 | Inserção | O(log n) |
 | Remoção | O(log n) |
 
 ---
 
-## 2. Tabela Hash com Endereçamento Aberto
+### 2. Tabela Hash com Endereçamento Aberto
 
 Estrutura baseada em espalhamento utilizando:
 
@@ -64,7 +64,7 @@ Estrutura baseada em espalhamento utilizando:
 - Hash Quadrático
 - Redimensionamento Dinâmico
 
-### Operações implementadas
+### Operações da Tabela Hash
 
 - Inserção
 - Busca
@@ -73,25 +73,25 @@ Estrutura baseada em espalhamento utilizando:
 - Tratamento de colisões
 - Redimensionamento automático
 
-### Características
+#### Características
 
 - Fator de carga máximo de 70%
 - Crescimento por fator 3
 - Capacidades sempre números primos
 
-### Complexidade
+#### Complexidade da Tabela Hash
 
 | Operação | Caso Médio |
-|-----------|-----------|
+| -------- | ---------- |
 | Inserção | O(1) |
 | Busca | O(1) |
 | Remoção | O(1) |
 
 ---
 
-# Testes Disponíveis
+## Testes Disponíveis
 
-## Árvore Rubro-Negra
+### Árvore Rubro-Negra
 
 1. Inserções simples
 2. Inserções com balanceamento
@@ -101,7 +101,7 @@ Estrutura baseada em espalhamento utilizando:
 6. Busca de elementos
 7. Chaves duplicadas
 
-## Tabela Hash
+### Tabela Hash
 
 1. Inserção simples
 2. Tratamento de colisões
@@ -112,7 +112,7 @@ Estrutura baseada em espalhamento utilizando:
 
 ---
 
-# Como Executar
+## Como Executar
 
 Compile o projeto:
 
@@ -128,7 +128,7 @@ java Main
 
 ---
 
-# Estrutura do Projeto
+## Estrutura do Projeto
 
 ```text
 src/
@@ -154,7 +154,7 @@ Main.java
 
 ---
 
-# Resultados
+## Resultados
 
 Todos os testes executados demonstram:
 
@@ -168,10 +168,8 @@ Todos os testes executados demonstram:
 
 ---
 
-# Tecnologias
+## Tecnologias Utilizadas
 
 - Java
 - Programação Orientada a Objetos
 - Estruturas de Dados
-
----
