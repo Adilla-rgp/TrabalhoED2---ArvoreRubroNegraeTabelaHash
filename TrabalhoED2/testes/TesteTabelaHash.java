@@ -5,9 +5,7 @@ import java.util.Random;
 public class TesteTabelaHash {
     
     public static void main(String[] args) {
-        System.out.println("╔═══════════════════════════════════════════════╗");
-        System.out.println("║   TESTE TABELA HASH COM ENDEREÇAMENTO ABERTO  ║");
-        System.out.println("╚═══════════════════════════════════════════════╝\n");
+        System.out.println("=====   TESTE TABELA HASH COM ENDEREÇAMENTO ABERTO  =====\n");
         
         testeBasico();
         testeColisoes();
@@ -18,7 +16,7 @@ public class TesteTabelaHash {
     }
     
     public static void testeBasico() {
-        System.out.println("\n--- TESTE 1: INSERÇÃO SIMPLES ---");
+        System.out.println("\n--- TESTE 1: Inserção simples ---");
         TabelaHash<String, Integer> tabela = new TabelaHash<>(5);
         
         System.out.println("Inserindo dados...");
@@ -54,7 +52,7 @@ public class TesteTabelaHash {
     }
     
     public static void testeRedimensionamento() {
-        System.out.println("\n--- TESTE 3: REDIMENSIONAMENTO DINÂMICO ---");
+        System.out.println("\n--- TESTE 3: Redimensionamento ---");
         TabelaHash<Integer, String> tabela = new TabelaHash<>(5);
         
         System.out.println("Tabela inicial - Capacidade: " + tabela.getCapacidade());
@@ -70,7 +68,7 @@ public class TesteTabelaHash {
     }
     
     public static void testeBuscasRemocoes() {
-        System.out.println("\n--- TESTE 4: BUSCAS E REMOÇÕES ---");
+        System.out.println("\n--- TESTE 4: Buscas e Remoções ---");
         TabelaHash<String, Double> tabela = new TabelaHash<>(7);
         
         System.out.println("Inserindo dados de produtos...");
@@ -92,7 +90,7 @@ public class TesteTabelaHash {
     }
     
     public static void testeAleatorio() {
-        System.out.println("\n--- TESTE 5: INSERÇÕES ALEATÓRIAS ---");
+        System.out.println("\n--- TESTE 5: Inserções Aleatórias ---");
         TabelaHash<Integer, String> tabela = new TabelaHash<>(11);
         
         Random rand = new Random(42);
@@ -116,7 +114,7 @@ public class TesteTabelaHash {
 
     public static void testeAtualizacao() {
 
-    System.out.println("\n--- TESTE 6: Atualização de chave ---");
+    System.out.println("\n--- TESTE 6: Atualização de valores ---");
 
     TabelaHash<String, Integer> tabela =
             new TabelaHash<>();
